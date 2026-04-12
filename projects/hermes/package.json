@@ -1,9 +1,24 @@
 {
-  "name": "hermes",
+  "name": "@hermes/angular",
   "version": "0.0.1",
+  "description": "Kafka-inspired topic bus for Angular and TypeScript UIs",
+  "keywords": [
+    "angular",
+    "rxjs",
+    "event-bus",
+    "message-bus",
+    "cross-tab",
+    "typescript"
+  ],
+  "author": "Church1ll",
+  "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^21.2.0",
     "@angular/core": "^21.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Church1ll/Hermes.git"
   },
   "dependencies": {
     "tslib": "^2.3.0"

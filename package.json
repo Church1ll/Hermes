@@ -2,11 +2,10 @@
   "name": "hermes-workspace",
   "version": "0.0.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "build:lib": "ng build hermes",
+    "build:demo": "ng build demo",
+    "serve:demo": "ng serve demo",
+    "pack:lib": "cd dist/hermes && npm pack"
   },
   "private": true,
   "packageManager": "npm@11.11.0",
