@@ -44,3 +44,5 @@ export interface SubscriptionScope {
   dispose(): void;
   readonly disposed: boolean;
 }
+
+export type TopicPattern = string;

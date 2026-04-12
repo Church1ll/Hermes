@@ -8,6 +8,8 @@ export class LeaderElector {
   private readonly channel?: BroadcastChannel;
   private readonly heartbeatMs: number;
   private readonly timeoutMs: number;
+  private readonly startedAt = Date.now();
+  private knownLeaderStartedAt = Number.MAX_SAFE_INTEGER;
   private isLeaderFlag = false;
   private state: LeaderState = {
     leaderId: null,
@@ -43,6 +45,15 @@ export class LeaderElector {
     this.channel?.close();
   }
 
+  private isBetterLeader(candidateTabId: string, candidateStartedAt: number): boolean {
+    if (!this.state.leaderId) return true;
+
+    if (candidateStartedAt < this.knownLeaderStartedAt) return true;
+    if (candidateStartedAt > this.knownLeaderStartedAt) return false;
+
+    return candidateTabId < (this.state.leaderId ?? '');
+  }
+
   private start(): void {
     this.channel?.postMessage({ type: 'hello', tabId: this.tabId });
 
@@ -60,6 +71,7 @@ export class LeaderElector {
           type: 'heartbeat',
           tabId: this.tabId,
           timestamp: Date.now(),
+          startedAt: this.startedAt
         });
       }
     }, this.heartbeatMs);
@@ -69,10 +81,13 @@ export class LeaderElector {
     this.isLeaderFlag = true;
     this.state.leaderId = this.tabId;
     this.state.lastHeartbeat = Date.now();
+    this.knownLeaderStartedAt = this.startedAt;
+
     this.channel?.postMessage({
       type: 'leader',
       tabId: this.tabId,
       timestamp: Date.now(),
+      startedAt: this.startedAt,
     });
   }
 
@@ -80,10 +95,15 @@ export class LeaderElector {
     if (!message) return;
 
     if (message.type === 'leader' || message.type === 'heartbeat') {
-      if (message.tabId !== this.tabId) {
+      if (message.tabId === this.tabId) return;
+
+      const candidateStartedAt = message.startedAt ?? Number.MAX_SAFE_INTEGER;
+
+      if (this.isBetterLeader(message.tabId, candidateStartedAt)) {
         this.isLeaderFlag = false;
         this.state.leaderId = message.tabId;
         this.state.lastHeartbeat = message.timestamp ?? Date.now();
+        this.knownLeaderStartedAt = candidateStartedAt;
       }
     }
   }

@@ -31,6 +31,7 @@ export class HermesBus<TTopics extends TopicMap> {
   private readonly tabId = createTabId();
   private readonly seenMessageIds = new Set<string>();
   private readonly bridge?: CrossTabBridge<TTopics>;
+  private readonly wildcardSubscriptions = new Map<string, Set<(message: BusMessage<any>) => void>>();
 
   constructor(options: BusOptions<TTopics> = {}) {
     this.registry = new TopicRegistry<TTopics>(options.topics);
@@ -47,6 +48,17 @@ export class HermesBus<TTopics extends TopicMap> {
 
   createScope(): Scope {
     return new Scope();
+  }
+
+  private matchesTopic(pattern: string, topic: string): boolean {
+    if (pattern === topic) return true;
+
+    if (pattern.endsWith('.*')) {
+      const prefix = pattern.slice(0, -2);
+      return topic.startsWith(prefix + '.');
+    }
+
+    return false;
   }
 
   publish<K extends keyof TTopics & string>(
@@ -94,6 +106,32 @@ export class HermesBus<TTopics extends TopicMap> {
     return teardown;
   }
 
+  subscribePattern(
+    pattern: string,
+    handler: (message: BusMessage<any>) => void,
+    options?: SubscribeOptions
+  ): () => void {
+    let handlers = this.wildcardSubscriptions.get(pattern);
+    if (!handlers) {
+      handlers = new Set();
+      this.wildcardSubscriptions.set(pattern, handlers);
+    }
+
+    handlers.add(handler);
+
+    const teardown = () => {
+      const current = this.wildcardSubscriptions.get(pattern);
+      if (!current) return;
+      current.delete(handler);
+      if (current.size === 0) {
+        this.wildcardSubscriptions.delete(pattern);
+      }
+    };
+
+    options?.scope?.add(teardown);
+    return teardown;
+  }
+
   stream<K extends keyof TTopics & string>(topic: K): Observable<TTopics[K]> {
     return this.registry.getChannel(topic).stream().pipe(map(m => m.payload));
   }
@@ -116,6 +154,13 @@ export class HermesBus<TTopics extends TopicMap> {
     }
 
     this.registry.getChannel(message.topic).publish(message);
+
+    for (const [pattern, handlers] of this.wildcardSubscriptions.entries()) {
+      if (!this.matchesTopic(pattern, message.topic)) continue;
+      for (const handler of handlers) {
+        handler(message);
+      }
+    }
   }
 
   private receiveCrossTab<K extends keyof TTopics & string>(message: BusMessage<TTopics[K]>): void {
