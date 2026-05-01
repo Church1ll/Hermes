@@ -1,8 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    font-family: "RM Neue",sans-serif;
+}
+
 .block {
-    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 1px solid rgb(193, 189, 189);
     border-radius: 8px;
-    padding: 10px 20px;
+    padding: 20px 20px;
     margin: 5px;
 }
 
@@ -10,4 +17,74 @@ p {
     padding: 0;
     margin: 0;
     font-weight: bold;
+    color: rgb(18, 18, 18);
+}
+
+.message {
+    display: flex;
+    width: fit-content;
+    flex-direction: column;
+    gap: 10px;
+    border: 1px solid rgb(193, 189, 189);
+    border-radius: 8px;
+    padding: 10px 20px;
+    margin: 5px;
+}
+
+.button {
+  width: fit-content;
+  align-items: center;
+  appearance: button;
+  background-color: #0276FF;
+  border-radius: 8px;
+  border-style: none;
+  box-shadow: rgba(255, 255, 255, 0.26) 0 1px 2px inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+  padding: 10px 21px;
+  text-align: center;
+  text-transform: none;
+  transition: color .13s ease-in-out,background .13s ease-in-out,opacity .13s ease-in-out,box-shadow .13s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button:active {
+  background-color: #006AE8;
+}
+
+.button:hover {
+  background-color: #1C84FF;
+}
+
+.button-success {
+    background-color: #15b400;
+}
+
+.button-success:active {
+    background-color: rgb(24, 207, 0);
+}
+
+.button-success:hover {
+    background-color: #14a901;
+}
+
+.button-error {
+    background-color: #d70202;
+}
+
+.button-error:active {
+    background-color: #d60000;
+}
+
+.button-error:hover {
+    background-color: #cc0101;
 }
