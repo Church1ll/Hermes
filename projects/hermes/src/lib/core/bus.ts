@@ -92,18 +92,24 @@ export class HermesBus<TTopics extends TopicMap> {
     handler: (payload: TTopics[K], message: BusMessage<TTopics[K]>) => void,
     options?: SubscribeOptions
   ): () => void {
-    const subscription: Subscription = this.registry
-      .getChannel(topic)
-      .stream()
-      .subscribe((message) => handler(message.payload, message));
+    const subscription = this.registry
+        .getChannel(topic)
+        .stream()
+        .subscribe((message) => {
+          handler(message.payload, message);
+        });
 
-    const teardown = () => subscription.unsubscribe();
+      let disposed = false;
 
-    if (options?.scope) {
-      options.scope.add(teardown);
-    }
+      const teardown = () => {
+        if (disposed) return;
+        disposed = true;
+        subscription.unsubscribe();
+      };
 
-    return teardown;
+      options?.scope?.add(teardown);
+
+      return teardown;
   }
 
   subscribePattern(

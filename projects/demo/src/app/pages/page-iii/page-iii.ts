@@ -15,13 +15,14 @@ export class PageIII {
   messages: { data: string }[] = [];
 
   constructor(private cdr: ChangeDetectorRef) {
-        this.hermes.subscribe(
+    this.hermes.subscribe(
       'socket.orders',
       (payload) => {
         console.log('received chat message', payload);
         this.messages.push(payload);
-        this.cdr.detectChanges();
-        console.log(this.messages)
+        if (!(this.cdr as any).destroyed) {
+          this.cdr.markForCheck();
+        }
       },
       { scope: this.scope }
     );
