@@ -14,20 +14,33 @@ export class ExternalSourceManager<TTopics extends TopicMap> {
     topic: K,
     factory: ExternalSourceFactory<TTopics[K]>
   ): void {
-    const startIfLeader = () => {
-      const existing = this.teardowns.get(topic);
-      if (existing) return;
+    let leaderStableTimer: number | undefined;
 
-      if (this.elector.isLeader) {
+    const startIfLeader = () => {
+      if (this.teardowns.has(topic)) return;
+      if (!this.elector.isLeader) return;
+
+      if (leaderStableTimer) return;
+
+      leaderStableTimer = window.setTimeout(() => {
+        leaderStableTimer = undefined;
+
+        if (!this.elector.isLeader || this.teardowns.has(topic)) return;
+
         const teardown = factory({
           emit: (payload, options) => this.bus.publish(topic, payload, options),
         });
         this.teardowns.set(topic, teardown);
-      }
+      }, 1000);
     };
 
     const stopIfFollower = () => {
       if (!this.elector.isLeader) {
+        if (leaderStableTimer) {
+          window.clearTimeout(leaderStableTimer);
+          leaderStableTimer = undefined;
+        }
+
         const teardown = this.teardowns.get(topic);
         if (teardown) {
           teardown();

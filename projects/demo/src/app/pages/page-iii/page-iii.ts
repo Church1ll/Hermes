@@ -18,7 +18,6 @@ export class PageIII {
     this.hermes.subscribe(
       'socket.orders',
       (payload) => {
-        console.log('received chat message', payload);
         this.messages.push(payload);
         if (!(this.cdr as any).destroyed) {
           this.cdr.markForCheck();

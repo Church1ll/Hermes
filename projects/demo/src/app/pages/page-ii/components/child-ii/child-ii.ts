@@ -17,7 +17,6 @@ export class ChildII {
     this.hermes.subscribe(
       'counter',
       (payload) => {
-        console.log('received chat message', payload);
         this.counter = payload['counter'];
       },
       { scope: this.scope }

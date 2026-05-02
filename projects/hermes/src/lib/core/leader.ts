@@ -57,10 +57,16 @@ export class LeaderElector {
   private start(): void {
     this.channel?.postMessage({ type: 'hello', tabId: this.tabId });
 
+    window.setTimeout(() => {
+      if (!this.state.leaderId) {
+        this.becomeLeader();
+      }
+    }, this.timeoutMs);
+
     this.electionTimer = window.setInterval(() => {
       const now = Date.now();
 
-      if (!this.state.leaderId || now - this.state.lastHeartbeat > this.timeoutMs) {
+      if (this.state.leaderId && now - this.state.lastHeartbeat > this.timeoutMs) {
         this.becomeLeader();
       }
     }, this.heartbeatMs);
@@ -93,6 +99,18 @@ export class LeaderElector {
 
   private handleMessage(message: any): void {
     if (!message) return;
+
+    if (message.type === 'hello') {
+      if (this.isLeaderFlag) {
+        this.channel?.postMessage({
+          type: 'leader',
+          tabId: this.tabId,
+          timestamp: Date.now(),
+          startedAt: this.startedAt,
+        });
+      }
+      return;
+    }
 
     if (message.type === 'leader' || message.type === 'heartbeat') {
       if (message.tabId === this.tabId) return;
