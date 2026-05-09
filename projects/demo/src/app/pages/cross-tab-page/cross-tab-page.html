@@ -1,0 +1,32 @@
+<section>
+  <div class="header">
+    <span>Feature 05</span>
+    <h1>Cross-Tab WebSocket Communication</h1>
+    <p>
+      Open this page in multiple browser tabs. Only one tab should keep the real WebSocket
+      connection, while the other tabs receive mirrored data through cross-tab communication.
+    </p>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-card">
+      <span>How to test</span>
+      <h2>Open multiple tabs</h2>
+      <p>
+        Watch the browser Network panel. The leader tab owns the socket, while follower tabs receive
+        the same messages without creating their own long-lived connection.
+      </p>
+    </div>
+
+    <div class="info-card">
+      <span>Leader failover</span>
+      <h2>Close the leader tab</h2>
+      <p>
+        After the heartbeat timeout, another tab becomes leader and starts managing the external
+        source.
+      </p>
+    </div>
+  </div>
+
+  <app-message-log title="Socket messages received through Hermes" [messages]="messages" />
+</section>

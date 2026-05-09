@@ -1,0 +1,35 @@
+<section>
+  <div class="header">
+    <span>Feature 04</span>
+    <h1>Lifecycle Management</h1>
+    <p>
+      This demo shows how Hermes scopes can automatically clean subscriptions when a component is
+      destroyed.
+    </p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Controls</h2>
+
+      <button (click)="toggleComponent()">
+        {{ visible ? 'Hide subscriber component' : 'Show subscriber component' }}
+      </button>
+
+      <button class="secondary" (click)="publish()">Publish lifecycle value</button>
+
+      <div class="stat">
+        <span>Current value</span>
+        <strong>{{ value }}</strong>
+      </div>
+
+      <p>Hide the component and publish values. The destroyed component should no longer react.</p>
+    </div>
+
+    @if (visible) {
+      <app-lifecycle-child />
+    } @else {
+      <div class="empty">Subscriber component is currently destroyed.</div>
+    }
+  </div>
+</section>

@@ -1,0 +1,14 @@
+<div class="log">
+  <div class="log-header">{{ title }}</div>
+
+  @if (messages.length === 0) {
+    <div class="empty">No messages yet</div>
+  }
+
+  @for (message of messages; track $index) {
+    <div class="item">
+      <span>{{ $index + 1 }}</span>
+      <p>{{ message }}</p>
+    </div>
+  }
+</div>

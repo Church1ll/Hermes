@@ -1,0 +1,29 @@
+<section>
+  <div class="header">
+    <span>Feature 03</span>
+    <h1>Message Replay</h1>
+    <p>
+      This demo shows that a new subscriber can receive previously published messages, depending on
+      the replay configuration of the topic.
+    </p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Publisher</h2>
+
+      <input [(ngModel)]="text" placeholder="Write a message" />
+
+      <button (click)="publish()">Publish message</button>
+      <button class="secondary" (click)="createSubscriber()">Create new subscriber</button>
+
+      <p>The <b>replay</b> topic keeps the latest messages and sends them to new subscribers.</p>
+    </div>
+
+    <app-message-log title="Published messages" [messages]="published" />
+  </div>
+
+  @for (subscriber of subscribers; track subscriber) {
+    <app-replay-subscriber />
+  }
+</section>

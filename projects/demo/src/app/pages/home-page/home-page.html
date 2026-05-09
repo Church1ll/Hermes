@@ -1,0 +1,52 @@
+<section class="hero">
+  <span class="badge">Bachelor Thesis Demo</span>
+  <h1>Hermes Messaging Library</h1>
+  <p>
+    A Kafka-inspired frontend communication library for topic-based messaging, reactive streams,
+    lifecycle-aware subscriptions, and cross-tab synchronization.
+  </p>
+</section>
+
+<section class="grid">
+  <app-feature-card
+    icon="🔁"
+    title="Topic Bus"
+    description="Demonstrates decoupled communication between independent components using topics."
+    link="/topic-bus"
+  />
+
+  <app-feature-card
+    icon="🧩"
+    title="Wildcard Topics"
+    description="Shows how one subscriber can listen to multiple related topics using patterns."
+    link="/wildcards"
+  />
+
+  <app-feature-card
+    icon="⏪"
+    title="Replay"
+    description="Demonstrates how new subscribers can receive recently published messages."
+    link="/replay"
+  />
+
+  <app-feature-card
+    icon="🧹"
+    title="Lifecycle"
+    description="Shows how scopes automatically clean subscriptions when components are removed."
+    link="/lifecycle"
+  />
+
+  <app-feature-card
+    icon="🌐"
+    title="Cross-Tab Socket"
+    description="Demonstrates shared WebSocket data between tabs with leader election."
+    link="/cross-tab"
+  />
+
+  <app-feature-card
+    icon="📊"
+    title="Metrics"
+    description="Displays basic runtime information about messages and subscriptions."
+    link="/metrics"
+  />
+</section>

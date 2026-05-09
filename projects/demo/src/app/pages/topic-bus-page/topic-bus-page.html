@@ -1,0 +1,16 @@
+<section class="page">
+  <div class="header">
+    <span>Feature 01</span>
+    <h1>Topic Bus Communication</h1>
+    <p>
+      This page demonstrates communication between two decoupled components. Child I publishes a
+      counter value, while Child II receives it through Hermes.
+    </p>
+  </div>
+
+  <div class="diagram">
+    <app-counter-producer />
+    <div class="arrow">→ topic: counter →</div>
+    <app-counter-consumer />
+  </div>
+</section>

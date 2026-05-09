@@ -1,7 +1,9 @@
 export type AppTopics = {
-  'chat.message': { id: string; text: string; roomId: string };
-  'modal.open': { name: string; props?: unknown };
-  'notifications.count': number;
+  counter: { value: number };
+  'chat.created': { text: string; createdAt: number };
+  'chat.updated': { text: string; updatedAt: number };
+  'chat.deleted': { id: string; deletedAt: number };
+  replay: { text: string; createdAt: number };
+  lifecycle: { value: number };
   'socket.orders': { data: string };
-  'counter': { counter: number };
 };

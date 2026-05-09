@@ -1,0 +1,27 @@
+<section class="page">
+  <div class="header">
+    <span>Feature 02</span>
+    <h1>Wildcard Topic Subscriptions</h1>
+    <p>
+      A single subscriber listens to all topics matching <b>chat.*</b>. This is useful when related
+      events should be handled by the same logic.
+    </p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Publish chat events</h2>
+
+      <button (click)="publishCreated()">Publish chat.created</button>
+      <button (click)="publishUpdated()">Publish chat.updated</button>
+      <button class="danger" (click)="publishDeleted()">Publish chat.deleted</button>
+
+      <p>
+        Each button publishes to a different topic, but the subscriber receives all of them through
+        one pattern.
+      </p>
+    </div>
+
+    <app-message-log title="Subscriber: chat.*" [messages]="logs" />
+  </div>
+</section>

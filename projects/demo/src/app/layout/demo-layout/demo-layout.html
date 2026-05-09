@@ -1,0 +1,27 @@
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">H</div>
+      <div>
+        <h2>Hermes</h2>
+        <p>Frontend Messaging Demo</p>
+      </div>
+    </div>
+
+    <nav>
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+        >Overview</a
+      >
+      <a routerLink="/topic-bus" routerLinkActive="active">Topic Bus</a>
+      <a routerLink="/wildcards" routerLinkActive="active">Wildcards</a>
+      <a routerLink="/replay" routerLinkActive="active">Replay</a>
+      <a routerLink="/lifecycle" routerLinkActive="active">Lifecycle</a>
+      <a routerLink="/cross-tab" routerLinkActive="active">Cross-Tab Socket</a>
+      <a routerLink="/metrics" routerLinkActive="active">Metrics</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <ng-content />
+  </main>
+</div>
