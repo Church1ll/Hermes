@@ -1,7 +1,6 @@
 {
-  "name": "@hermes/angular",
-  "version": "0.1.0",
-  "description": "A Kafka-inspired topic-based communication library for frontend applications.",
+  "name": "hermes-workspace",
+  "version": "0.0.0",
   "keywords": [
     "angular",
     "rxjs",

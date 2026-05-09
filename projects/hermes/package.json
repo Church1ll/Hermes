@@ -1,14 +1,17 @@
 {
-  "name": "@hermes/angular",
-  "version": "0.0.1",
+  "name": "@hermes-rx/angular",
+  "version": "0.1.0",
   "description": "Kafka-inspired topic bus for Angular and TypeScript UIs",
   "keywords": [
     "angular",
     "rxjs",
+    "typescript",
     "event-bus",
     "message-bus",
+    "pubsub",
     "cross-tab",
-    "typescript"
+    "websocket",
+    "frontend"
   ],
   "author": "Church1ll",
   "license": "MIT",
