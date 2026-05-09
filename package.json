@@ -1,12 +1,26 @@
 {
-  "name": "hermes-workspace",
-  "version": "0.0.0",
+  "name": "@hermes/angular",
+  "version": "0.1.0",
+  "description": "A Kafka-inspired topic-based communication library for frontend applications.",
+  "keywords": [
+    "angular",
+    "rxjs",
+    "typescript",
+    "event-bus",
+    "message-bus",
+    "pubsub",
+    "cross-tab",
+    "websocket",
+    "frontend"
+  ],
   "scripts": {
     "build:lib": "ng build hermes",
     "build:demo": "ng build demo",
     "serve:demo": "ng serve demo",
     "pack:lib": "cd dist/hermes && npm pack"
   },
+  "license": "MIT",
+  "sideEffects": false,
   "private": true,
   "packageManager": "npm@11.11.0",
   "dependencies": {
