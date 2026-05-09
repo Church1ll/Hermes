@@ -28,6 +28,9 @@ It provides a structured publish–subscribe architecture for modern frontend ap
 - Message deduplication
 - Angular integration
 
+> **IMPORTANT:** <br>
+> I left an API key in the demo for the socket connection, so you don't have to get one. This key was created for testing purposes only, using a TempMail account, and is linked to a free socket server with limits, so spam it and enjoy it as much as you want while it's still working.
+
 ## Installation
 
 ```bash
