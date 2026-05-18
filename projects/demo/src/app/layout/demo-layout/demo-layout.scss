@@ -19,18 +19,18 @@
 .brand {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
 }
 
 .logo {
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, #6366f1, #22d3ee);
-  display: grid;
-  place-items: center;
-  font-weight: 800;
-  font-size: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: 54px;
+    height: 54px;
+  }
 }
 
 h2 {
