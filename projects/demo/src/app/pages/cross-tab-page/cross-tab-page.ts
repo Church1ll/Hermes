@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { HERMES_BUS, HermesBus, createAngularScope } from 'hermes';
 import { AppTopics } from '../../topics';
 import { MessageLog } from '../../shared/message-log/message-log';
@@ -15,11 +15,12 @@ export class CrossTabPage {
 
   messages: string[] = [];
 
-  constructor() {
+  constructor(private cdr: ChangeDetectorRef) {
     this.bus.subscribe(
       'socket.orders',
       (payload) => {
         this.messages = [payload.data, ...this.messages].slice(0, 50);
+        this.cdr.detectChanges();
       },
       { scope: this.scope },
     );
